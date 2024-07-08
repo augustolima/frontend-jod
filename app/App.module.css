@@ -3,6 +3,29 @@
   background-color: var(--mantine-color-jodBlue-0);
 }
 
+.header {
+  height: rem(72);
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 1rem;
+
+    .icon {
+      color: #91b0d1;
+    }
+  }
+}
+
 .navbar {
   background-color: var(--mantine-color-jodDarkBlue-9);
+}
+
+.welcome {
+  color: #91b0d1;
+  font-size: var(--mantine-font-size-sm);
+  line-height: var(--mantine-line-height-xs);
 }

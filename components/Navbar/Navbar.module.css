@@ -1,0 +1,20 @@
+.link {
+  --nl-bg: #18263f;
+  --nl-color: #b3d2ff;
+  padding: 1rem;
+
+  &[data-active] {
+    --nl-color: #82cff6;
+  }
+
+  &:hover {
+    background-color: var(--nl-bg);
+    color: var(--nl-color);
+  }
+}
+
+.label {
+  font-size: var(--mantine-font-size-md);
+  font-weight: 500;
+  color: var(--nl-color);
+}

@@ -1,0 +1,60 @@
+.container {
+  height: calc(100dvh - 7rem);
+  margin-top: rem(14);
+  background-color: white;
+
+  .header {
+    height: rem(68);
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    padding: 1rem 1rem 0;
+  }
+
+  .content {
+    padding: 1rem;
+    border-top: rem(1) solid #e7eaf1;
+
+    thead {
+      color: #91b0d1;
+
+      p {
+        font-size: rem(10);
+        line-height: rem(13);
+      }
+    }
+
+    tbody {
+      tr:nth-child(odd) {
+        background-color: #f1f7fc;
+      }
+
+      td {
+        color: #4f7091;
+
+        p {
+          font-size: rem(14);
+          line-height: rem(17);
+        }
+      }
+    }
+
+    .badge {
+      font-size: rem(12);
+      line-height: rem(14);
+      font-weight: normal;
+      height: rem(26);
+      text-transform: inherit;
+
+      &.checkup {
+        color: #0068ff;
+        background-color: #dceeff;
+      }
+
+      &.emergency {
+        color: #ff7786;
+        background-color: #fff1f3;
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ScrollArea, NavLink } from '@mantine/core';
 import {
   IconChartCandle,
@@ -6,7 +8,6 @@ import {
   IconArrowsSplit2,
   IconReportSearch,
 } from '@tabler/icons-react';
-import { useState } from 'react';
 
 import classes from './Navbar.module.css';
 
@@ -15,46 +16,30 @@ const menuOptions = [
   {
     label: 'Pacientes',
     icon: IconUserCircle,
-    link: '/',
+    link: '/pacientes',
   },
   {
     label: 'Agenda',
     icon: IconCalendarEvent,
-    link: '/',
+    link: '/agenda',
   },
-  { label: 'Jornadas', icon: IconArrowsSplit2, link: '/' },
-  { label: 'Relatórios', icon: IconReportSearch, link: '/' },
+  { label: 'Jornadas', icon: IconArrowsSplit2, link: '/jornadas' },
+  { label: 'Relatórios', icon: IconReportSearch, link: '/relatorios' },
 ];
 
 export function NavbarSimple() {
-  const [active, setActive] = useState(0);
+  const pathname = usePathname();
 
   // TODO: Add filter by user role
-
-  const links = menuOptions.map((item, index) => (
+  const links = menuOptions.map((item) => (
     <NavLink
-      className={classes.link}
-      data-active={index === active || undefined}
+      component={Link}
+      active={pathname === item.link}
+      classNames={{ root: classes.link, label: classes.label }}
       href={item.link}
       key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(index);
-      }}
       leftSection={<item.icon size="1.25rem" stroke={1.5} color="var(--nl-color)" />}
       label={item.label}
-      styles={{
-        root: {
-          '--nl-bg': '#18263F',
-          '--nl-color': '#82CFF6',
-          padding: '1rem',
-        },
-        label: {
-          fontSize: 'var(--mantine-font-size-md)',
-          fontWeight: '500',
-          color: 'var(--nl-color)',
-        },
-      }}
     />
   ));
 
