@@ -113,6 +113,10 @@ function validateCPF(cpf: string): string | null {
   return 'CPF inválido';
 }
 
+function validateEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? null : 'E-mail inválido';
+}
+
 export default function PatientsPage() {
   const [activeTab, setActiveTab] = useState(TABS[0]);
   const [opened, { open, close }] = useDisclosure(false);
@@ -130,7 +134,7 @@ export default function PatientsPage() {
     },
 
     validate: {
-      email: (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? null : 'E-mail inválido'),
+      email: validateEmail,
       cpf: validateCPF,
     },
   });
@@ -195,6 +199,7 @@ export default function PatientsPage() {
           </Modal.Header>
           <Modal.Body className={classes.modalBody}>
             <form
+              // TODO: Add onSubmit handler
               onSubmit={form.onSubmit((values) => console.log(values))}
               className={classes.form}
             >
