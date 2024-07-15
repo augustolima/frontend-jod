@@ -187,7 +187,7 @@ export default function PatientsPage() {
         </div>
       </div>
       <Modal.Root opened={opened} onClose={close} centered size="lg">
-        <Modal.Overlay />
+        <Modal.Overlay className={classes.overlay} />
         <Modal.Content>
           <Modal.Header className={classes.modalHeader}>
             <IconUserCircle className={classes.icon} />
@@ -288,8 +288,12 @@ export default function PatientsPage() {
                 className={classes.input}
               />
               <Group justify="flex-end" gap="xs">
-                <Button onClick={close}>Cancelar</Button>
-                <Button type="submit">Salvar</Button>
+                <Button onClick={close} size="md">
+                  Cancelar
+                </Button>
+                <Button type="submit" size="md">
+                  Salvar
+                </Button>
               </Group>
             </form>
           </Modal.Body>

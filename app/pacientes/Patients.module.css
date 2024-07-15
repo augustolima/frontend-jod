@@ -66,6 +66,10 @@
   }
 }
 
+.overlay {
+  --overlay-bg: rgba(130, 208, 246, 0.72);
+}
+
 .modalHeader {
   justify-content: flex-start;
   gap: rem(9);
