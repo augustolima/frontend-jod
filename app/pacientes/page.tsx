@@ -246,7 +246,8 @@ export default function PatientsPage() {
                   label="Telefone"
                   placeholder="(00) 00000-0000"
                   component={IMaskInput}
-                  mask="(00) 00000-0000"
+                  // TODO: Make first number optional
+                  mask="(00) [0]0000-0000"
                   key={form.key('phone')}
                   {...form.getInputProps('phone')}
                   size="md"
