@@ -23,7 +23,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <div className={classes.wrapper}>
           <Group h="100%">
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            {/* TODO: Add profile, messages and alerts icons */}
+            {/* TODO: Create breadcrumb */}
             <Text className={classes.welcome}>Bem-vindo(a)!</Text>
           </Group>
           <Group justify="end">
