@@ -1,7 +1,14 @@
 'use client';
 
-import { IconChevronDown, IconChevronUp, IconSelector } from '@tabler/icons-react';
 import {
+  IconBrandWhatsapp,
+  IconChevronDown,
+  IconChevronUp,
+  IconEye,
+  IconSelector,
+} from '@tabler/icons-react';
+import {
+  ActionIcon,
   Avatar,
   Badge,
   Center,
@@ -10,7 +17,6 @@ import {
   Table,
   Text,
   UnstyledButton,
-  rem,
 } from '@mantine/core';
 import { useState } from 'react';
 
@@ -31,6 +37,7 @@ const appointments: { [key: string]: string } = {
 export function PatientsTable({ data }: { data: any[] }) {
   const [sortBy, setSortBy] = useState<string | null>(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
+  const [activeRow, setActiveRow] = useState<number | null>(null);
 
   const setSorting = (field: string) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -46,17 +53,17 @@ export function PatientsTable({ data }: { data: any[] }) {
         striped
         withTableBorder
         highlightOnHover
-        verticalSpacing="md"
+        verticalSpacing="lg"
         className={classes.table}
       >
         <Table.Thead>
           <Table.Tr>
             <Table.Th>
               <UnstyledButton onClick={() => setSorting('name')}>
-                <Group justify="space-between">
+                <Group justify="space-between" wrap="nowrap" gap="xs">
                   <Text fw={700}>PACIENTE</Text>
                   <Center>
-                    <Icon style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+                    <Icon size={16} stroke={1.5} />
                   </Center>
                 </Group>
               </UnstyledButton>
@@ -79,11 +86,16 @@ export function PatientsTable({ data }: { data: any[] }) {
             <Table.Th>
               <Text fw={700}>ETAPA</Text>
             </Table.Th>
+            <Table.Th className={classes.actionHead}></Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {data.map((patient) => (
-            <Table.Tr key={patient.name}>
+          {data.map((patient, index) => (
+            <Table.Tr
+              key={patient.name}
+              onMouseOver={() => setActiveRow(index)}
+              onMouseOut={() => setActiveRow(null)}
+            >
               <Table.Td>
                 <Text fw={500}>{patient.name}</Text>
               </Table.Td>
@@ -118,6 +130,28 @@ export function PatientsTable({ data }: { data: any[] }) {
               </Table.Td>
               <Table.Td>
                 <Text fw={500}>{patient.stage}</Text>
+              </Table.Td>
+              <Table.Td>
+                {activeRow === index && (
+                  <Group justify="end" gap="4">
+                    <ActionIcon
+                      className={classes.action}
+                      size="md"
+                      radius="xl"
+                      aria-label="What's App"
+                    >
+                      <IconBrandWhatsapp size={16} stroke={1.5} />
+                    </ActionIcon>
+                    <ActionIcon
+                      className={classes.action}
+                      size="md"
+                      radius="xl"
+                      aria-label="Visualizar"
+                    >
+                      <IconEye size={16} stroke={1.5} />
+                    </ActionIcon>
+                  </Group>
+                )}
               </Table.Td>
             </Table.Tr>
           ))}

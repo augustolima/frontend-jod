@@ -6,6 +6,10 @@
       font-size: rem(10);
       line-height: rem(13);
     }
+
+    .actionHead {
+      width: rem(90);
+    }
   }
 
   tbody {
@@ -19,6 +23,11 @@
       p {
         font-size: rem(14);
         line-height: rem(17);
+      }
+
+      .action {
+        background-color: #cde1fd;
+        color: #0068ff;
       }
     }
   }
