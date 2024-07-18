@@ -15,8 +15,8 @@ import { useDisclosure } from '@mantine/hooks';
 
 import { PatientsTable } from '@/components/PatientsTable/PatientsTable';
 
-import { NewModal } from './components/NewModal';
-import { FilterDrawer } from './components/FilterDrawer';
+import { NewModal } from './_components/NewModal';
+import { FilterDrawer } from './_components/FilterDrawer';
 import classes from './Patients.module.css';
 
 const patients = [

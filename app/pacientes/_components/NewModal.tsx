@@ -5,6 +5,7 @@ import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { Group, InputBase, Modal, Select, TextInput, Button } from '@mantine/core';
 import { IconUserCircle } from '@tabler/icons-react';
 
+import { useState } from 'react';
 import classes from './NewModal.module.css';
 
 function validateCPF(cpf: string): string | null {
@@ -49,6 +50,7 @@ interface NewModalProps {
 }
 
 export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
+  const [isAddressDisabled, setAddressDisabled] = useState(true);
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -67,12 +69,40 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
       email: isEmail('Email inválido'),
       cpf: validateCPF,
     },
+
+    transformValues: (values) => ({
+      ...values,
+      cep: values.cep.replace(/[^\d]/g, ''),
+    }),
   });
 
   const handleClose = () => {
     form.reset();
     closeModal();
   };
+
+  form.watch('cep', async ({ previousValue, value }) => {
+    if (value.length === 9) {
+      const res = await fetch(`/api/zipcode?code=${value.replace(/[^\d]/g, '')}`);
+
+      if (res.status >= 400) {
+        form.setFieldError('cep', 'CEP inválido');
+        return;
+      }
+
+      const data = await res.json();
+      form.setValues({
+        city: `${data.data.localidade}/${data.data.uf}`,
+        address: `${data.data.logradouro}, ${data.data.bairro}`,
+      });
+      setAddressDisabled(false);
+    }
+
+    if (previousValue.length === 9 && value.length < 9) {
+      form.setValues({ city: '', address: '' });
+      setAddressDisabled(true);
+    }
+  });
 
   return (
     <Modal.Root opened={isModalOpen} onClose={closeModal} centered size="lg">
@@ -89,6 +119,7 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
             className={classes.form}
           >
             <TextInput
+              withAsterisk
               label="Nome"
               placeholder="Digite aqui"
               key={form.key('name')}
@@ -98,6 +129,7 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
             />
             <Group grow>
               <InputBase
+                withAsterisk
                 label="CPF"
                 placeholder="000.000.000-00"
                 component={IMaskInput}
@@ -109,6 +141,7 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
                 className={classes.input}
               />
               <Select
+                withAsterisk
                 label="Estado civil"
                 placeholder="Selecione"
                 data={[
@@ -128,6 +161,7 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
             </Group>
             <Group grow>
               <InputBase
+                withAsterisk
                 label="Telefone"
                 placeholder="(00) 00000-0000"
                 component={IMaskInput}
@@ -139,6 +173,7 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
                 className={classes.input}
               />
               <TextInput
+                withAsterisk
                 label="E-mail"
                 placeholder="Ex. fulano@gmail.com"
                 key={form.key('email')}
@@ -150,6 +185,7 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
             <Group grow>
               {/* TODO: Integrate with ViaCEP? */}
               <InputBase
+                withAsterisk
                 label="CEP"
                 placeholder="00000-000"
                 component={IMaskInput}
@@ -160,9 +196,10 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
                 className={classes.input}
               />
               <TextInput
+                withAsterisk
                 label="Cidade/UF"
                 placeholder="Digite o CEP"
-                disabled
+                disabled={isAddressDisabled}
                 key={form.key('city')}
                 {...form.getInputProps('city')}
                 size="md"
@@ -170,9 +207,10 @@ export function NewModal({ isModalOpen, closeModal }: NewModalProps) {
               />
             </Group>
             <TextInput
+              withAsterisk
               label="Endereço"
               placeholder="Digite o CEP"
-              disabled
+              disabled={isAddressDisabled}
               key={form.key('address')}
               {...form.getInputProps('address')}
               size="md"

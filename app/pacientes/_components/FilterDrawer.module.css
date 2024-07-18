@@ -1,40 +1,39 @@
 .drawer {
   --overlay-bg: rgba(130, 208, 246, 0.72);
 
-  h2 {
+  .title {
     color: #4f7091;
     font-size: rem(18);
     font-weight: bold;
     line-height: rem(22);
   }
 
-  .form {
-    display: grid;
-    grid-template-rows: 1fr auto;
-    justify-content: space-between;
+  .drawerBody {
+    /* rem(86) is the height of the header */
+    height: calc(100% - rem(86));
 
-    .input {
-      label {
-        font-size: rem(13);
-        color: #4f7091;
-      }
+    .form {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      justify-content: space-between;
 
-      input {
-        height: rem(48);
-        font-size: rem(14);
-        color: #4f7091;
+      .input {
+        label {
+          font-size: rem(13);
+          color: #4f7091;
+        }
 
-        &::placeholder {
+        input {
+          height: rem(48);
           font-size: rem(14);
-          color: #91b0d1;
+          color: #4f7091;
+
+          &::placeholder {
+            font-size: rem(14);
+            color: #91b0d1;
+          }
         }
       }
-    }
-
-    .btnWrapper {
-      position: absolute;
-      bottom: rem(32);
-      right: rem(32);
 
       .btn {
         width: rem(114);
