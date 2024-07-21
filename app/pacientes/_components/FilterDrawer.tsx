@@ -6,6 +6,7 @@ import { Group, Select, Autocomplete, Button, Drawer, Stack, rem } from '@mantin
 import { DateInput, DatesProvider } from '@mantine/dates';
 import { IconCalendarEvent } from '@tabler/icons-react';
 
+import { useState } from 'react';
 import classes from './FilterDrawer.module.css';
 
 interface FilterDrawerProps {
@@ -14,6 +15,17 @@ interface FilterDrawerProps {
 }
 
 export function FilterDrawer({ isFilterOpen, closeFilter }: FilterDrawerProps) {
+  const [fromDate, setFromDate] = useState<Date | undefined>();
+
+  const handleFromDateChange = (value: Date | null) => {
+    if (value) {
+      setFromDate(value);
+      return;
+    }
+    // it must be undefined due to DateInput prop definition
+    setFromDate(undefined);
+  };
+
   return (
     <Drawer.Root
       position="right"
@@ -73,8 +85,8 @@ export function FilterDrawer({ isFilterOpen, closeFilter }: FilterDrawerProps) {
                     rightSection={<IconCalendarEvent />}
                     firstDayOfWeek={0}
                     className={classes.input}
+                    onChange={handleFromDateChange}
                   />
-                  {/* TODO: Handle minDate based on fromDate */}
                   <DateInput
                     label="Até"
                     valueFormat="DD/MM/YYYY"
@@ -82,6 +94,7 @@ export function FilterDrawer({ isFilterOpen, closeFilter }: FilterDrawerProps) {
                     rightSection={<IconCalendarEvent />}
                     firstDayOfWeek={0}
                     className={classes.input}
+                    minDate={fromDate}
                   />
                 </Group>
               </DatesProvider>

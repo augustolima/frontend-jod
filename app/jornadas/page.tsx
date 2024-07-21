@@ -1,3 +1,5 @@
-export default function PatientsPage() {
-  return <h1>Jornadas Page</h1>;
+'use client';
+
+export default function JourneyPage() {
+  return <h1>Jornadas</h1>;
 }

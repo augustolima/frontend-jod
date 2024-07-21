@@ -8,7 +8,7 @@ export const metadata = {
   description: 'A evolução tecnológica para jornadas mais humanas!',
 };
 
-export default function RootLayout({ children }: { children: any }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
       <head>
