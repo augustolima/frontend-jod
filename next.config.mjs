@@ -10,6 +10,6 @@ export default withBundleAnalyzer({
     ignoreDuringBuilds: true,
   },
   experimental: {
-    optimizePackageImports: ['@mantine/core', '@mantine/hooks', '@mantine/form'],
+    optimizePackageImports: ['@mantine/core', '@mantine/hooks', '@mantine/form', '@mantine/dates'],
   },
 });

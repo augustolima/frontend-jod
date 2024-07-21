@@ -1,0 +1,58 @@
+.drawer {
+  --overlay-bg: rgba(130, 208, 246, 0.72);
+
+  .title {
+    color: #4f7091;
+    font-size: rem(18);
+    font-weight: bold;
+    line-height: rem(22);
+  }
+
+  .drawerBody {
+    /* rem(86) is the height of the header */
+    height: calc(100% - rem(86));
+
+    .form {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      justify-content: space-between;
+
+      .input {
+        label {
+          font-size: rem(13);
+          color: #4f7091;
+        }
+
+        input {
+          height: rem(48);
+          font-size: rem(14);
+          color: #4f7091;
+
+          &::placeholder {
+            font-size: rem(14);
+            color: #91b0d1;
+          }
+        }
+      }
+
+      .btn {
+        width: rem(114);
+        height: rem(41);
+        font-size: rem(14);
+        line-height: rem(17);
+        font-weight: medium;
+
+        &.filter {
+          background-color: #82d0f6;
+          color: white;
+        }
+
+        &.cancel {
+          background-color: white;
+          border-color: #d6deeb;
+          color: #82d0f6;
+        }
+      }
+    }
+  }
+}
