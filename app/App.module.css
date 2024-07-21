@@ -1,0 +1,8 @@
+.app,
+.header {
+  background-color: var(--mantine-color-jodBlue-0);
+}
+
+.navbar {
+  background-color: var(--mantine-color-jodDarkBlue-9);
+}
