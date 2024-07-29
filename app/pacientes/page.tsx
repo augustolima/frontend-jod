@@ -114,16 +114,16 @@ export default function PatientsPage() {
             <Input
               placeholder="Buscar"
               variant="unstyled"
-              rightSection={<IconSearch />}
+              rightSection={<IconSearch size="16" />}
               className={classes.search}
               classNames={{ section: classes.icon }}
             />
             <ActionIcon size="lg" className={classes.filter} onClick={openFilter}>
-              <IconFilterPlus />
+              <IconFilterPlus size="16" />
             </ActionIcon>
             <Button
               size="compact-lg"
-              leftSection={<IconUserCircle />}
+              leftSection={<IconUserCircle size="16" />}
               className={classes.new}
               onClick={openModal}
             >

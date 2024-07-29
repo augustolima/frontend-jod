@@ -88,12 +88,29 @@
       gap: rem(12);
       width: rem(300);
 
+      .add {
+        background-color: #e9f3fb;
+        color: #82d0f6;
+        font-weight: bold;
+        font-size: rem(14);
+      }
+
       .header {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         gap: rem(8);
+        border-bottom: rem(2) solid #e4eaef;
+        padding-bottom: rem(10);
+
+        &.active {
+          border-color: #82d0f6;
+
+          .inputWrapper {
+            height: rem(30);
+          }
+        }
 
         .title {
           color: #4f7091;
@@ -111,6 +128,12 @@
           color: #98acc1;
           background-color: white;
           border: rem(1) solid #e4eaef;
+
+          &.menuOpened {
+            background-color: #ebf7fe;
+            border: rem(1) solid #ebf7fe;
+            color: #0068ff;
+          }
         }
 
         .add {
@@ -125,6 +148,18 @@
         flex-direction: column;
         gap: rem(8);
       }
+    }
+  }
+}
+
+.dropdown {
+  background-color: #82d0f6;
+
+  .menuItem {
+    color: white;
+
+    &[data-hovered='true'] {
+      background-color: rgba(0, 0, 0, 0.1);
     }
   }
 }

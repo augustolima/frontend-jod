@@ -1,0 +1,53 @@
+.table {
+  thead {
+    color: #91b0d1;
+
+    p {
+      font-size: rem(10);
+      line-height: rem(13);
+    }
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background-color: #f1f7fc;
+    }
+
+    td {
+      color: #4f7091;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      p {
+        font-size: rem(14);
+        line-height: rem(17);
+      }
+
+      .action {
+        background-color: #cde1fd;
+        color: #0068ff;
+      }
+    }
+  }
+
+  .badge {
+    font-size: rem(12);
+    line-height: rem(14);
+    font-weight: normal;
+    height: rem(26);
+    text-transform: inherit;
+
+    &.active {
+      color: #1cc072;
+      background-color: #daf5e8;
+    }
+
+    &.inactive {
+      color: #ff7786;
+      background-color: #fff1f3;
+    }
+  }
+}

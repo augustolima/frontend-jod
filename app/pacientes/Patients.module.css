@@ -36,6 +36,7 @@
 
       .new {
         background-color: #82d0f6;
+        font-size: rem(12);
       }
 
       .filter {
