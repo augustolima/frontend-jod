@@ -1,3 +1,188 @@
 .container {
   height: 100%;
+  width: 100%;
+  margin-top: rem(16);
+  display: flex;
+  flex-direction: row;
+  gap: rem(8);
+
+  .wrapper {
+    flex: 2;
+
+    .editSection {
+      display: flex;
+      flex-direction: column;
+
+      .header {
+        padding: rem(24);
+        border-bottom: rem(1) solid #e0e0e0;
+
+        .title {
+          color: #4f7091;
+          font-size: rem(16);
+          line-height: rem(30);
+          font-weight: 500;
+        }
+      }
+
+      .body {
+        padding: rem(24);
+
+        .form {
+          display: flex;
+          flex-direction: column;
+          gap: rem(24);
+
+          .save {
+            color: white;
+            background-color: #82d0f6;
+            border-radius: rem(2);
+            align-self: end;
+          }
+        }
+      }
+    }
+
+    .taskSection {
+      display: flex;
+      flex-direction: column;
+
+      .header {
+        padding: rem(24) rem(24) 0;
+        border-bottom: rem(1) solid #e0e0e0;
+        display: flex;
+
+        .title {
+          color: #4f7091;
+          font-size: rem(16);
+          font-weight: 500;
+          padding-bottom: rem(16);
+          border-bottom: rem(4) solid #82cff6;
+        }
+      }
+
+      .body {
+        padding: rem(24);
+
+        .timeline {
+          position: relative;
+          list-style-type: none;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: rem(22);
+            top: 0;
+            bottom: 0;
+            width: rem(2);
+            background: #f2f5f9;
+          }
+
+          .timelineItem {
+            position: relative;
+            padding-left: rem(60);
+
+            &:not(:first-child) {
+              margin-top: rem(20);
+            }
+
+            &::before {
+              content: '';
+              position: absolute;
+              width: rem(10);
+              height: rem(10);
+              left: rem(18);
+              background-color: white;
+              border: rem(2) solid var(--bullet-color, black);
+              border-radius: 50%;
+              top: 50%;
+              transform: translateY(-50%);
+              z-index: 1;
+            }
+
+            &.whatsapp::before {
+              --bullet-color: #126469;
+            }
+
+            &.contract::before {
+              --bullet-color: #205f9c;
+            }
+
+            &.checklist::before {
+              --bullet-color: #ce6f08;
+            }
+
+            &.whatsapp {
+              .timelineContent {
+                color: #126469;
+                background-color: #e9f4f5;
+              }
+            }
+
+            &.contract {
+              .timelineContent {
+                color: #205f9c;
+                background-color: #dceeff;
+              }
+            }
+
+            &.checklist {
+              .timelineContent {
+                color: #ce6f08;
+                background-color: #ffeedb;
+              }
+            }
+
+            .timelineContent {
+              padding: rem(16);
+              position: relative;
+
+              .iconWrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: white;
+                border-radius: 50%;
+                height: rem(40);
+                width: rem(40);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .addSection {
+    flex: 1;
+    padding: rem(24);
+    display: flex;
+    flex-direction: column;
+    gap: rem(24);
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      gap: rem(24);
+
+      .title {
+        font-size: rem(16);
+        font-weight: 500;
+        color: #4f7091;
+      }
+    }
+
+    .body {
+      display: flex;
+      flex-direction: column;
+      gap: rem(8);
+
+      .label {
+        font-weight: normal;
+        font-size: rem(11);
+        line-height: rem(13);
+        color: #4f7091;
+      }
+    }
+  }
 }

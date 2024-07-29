@@ -7,17 +7,19 @@ import {
   Button,
   Divider,
   Group,
+  Menu,
   ScrollArea,
   SegmentedControl,
   Text,
   TextInput,
+  UnstyledButton,
 } from '@mantine/core';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 import { IconCheck, IconDots, IconPencil, IconPlus } from '@tabler/icons-react';
-import { useInputState } from '@mantine/hooks';
+import { useClickOutside, useInputState } from '@mantine/hooks';
 import { reorderRows, reorderColumns } from '@/utils/reorder';
 
-import classes from './Board.module.css';
+import classes from './NewBoard.module.css';
 
 import TaskList from '../_components/TaskList';
 
@@ -130,18 +132,28 @@ const columns: Column[] = [
   { id: 3, name: null, data: [] },
 ];
 
-export default function BoardPage() {
+const DEFAULT_COLUMN_TITLE = { id: 0, value: '' };
+
+export default function NewBoardPage() {
   // Title handlers
-  const [journeyTitle, setJourneyTitle] = useInputState('Jornada de Agendamento');
+  const [journeyTitle, setJourneyTitle] = useInputState('');
   const [isEditingTitle, setIsEditingTitle] = useState(false);
 
+  // Column Header handlers
+  const [openedId, setOpenedId] = useState(0);
+
   // Active/Inactive status
-  const [status, setStatus] = useState('active');
+  const [status, setStatus] = useState('inactive');
 
   // Global data
-  const [data, setData] = useState(columns);
+  const [data, setData] = useState<any[]>(columns);
+
   // Column title handlers
-  const [columnEditTitle, setColumnEditTitle] = useState({ id: 0, value: '' });
+  const [columnEditTitle, setColumnEditTitle] = useState(DEFAULT_COLUMN_TITLE);
+  const refColumnTitle = useClickOutside(() => {
+    // TODO: Integrate with backend
+    setColumnEditTitle(DEFAULT_COLUMN_TITLE);
+  });
   const handleEditColumnTitle = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     // TODO: Update title on backend
     if (event.key === 'Enter' || event.code === 'Enter') {
@@ -156,7 +168,7 @@ export default function BoardPage() {
 
         return newState;
       });
-      setColumnEditTitle({ id: 0, value: '' });
+      setColumnEditTitle(DEFAULT_COLUMN_TITLE);
     }
   };
 
@@ -229,12 +241,11 @@ export default function BoardPage() {
     setIsEditingTitle((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    // TODO: Send new title to server
-    if (!isEditingTitle) {
-      console.log('Title changed to:', journeyTitle);
-    }
-  }, [isEditingTitle]);
+  // useEffect(() => {
+  //   if (!isEditingTitle) {
+  //     console.log('Title changed to:', journeyTitle);
+  //   }
+  // }, [isEditingTitle]);
 
   return (
     <div className={classes.container}>
@@ -242,13 +253,15 @@ export default function BoardPage() {
         <Group gap={12} wrap="nowrap">
           {isEditingTitle ? (
             <TextInput
+              className={classes.title}
+              placeholder={journeyTitle?.length === 0 ? 'Título da Jornada' : ''}
               autoFocus
               value={journeyTitle}
               onChange={setJourneyTitle}
               onKeyUp={handleInputSubmit}
             />
           ) : (
-            <Text className={classes.title}>{journeyTitle}</Text>
+            <Text className={classes.title}>{journeyTitle || 'Título da Jornada'}</Text>
           )}
           <ActionIcon radius="xl" className={classes.edit} onClick={handleEditClick}>
             {isEditingTitle ? (
@@ -287,7 +300,11 @@ export default function BoardPage() {
           <div className={classes.board}>
             {data.map((column, index) => (
               <div className={classes.column} key={column.id}>
-                <div className={classes.header}>
+                <div
+                  className={csx(classes.header, {
+                    [classes.active]: columnEditTitle.id === column.id,
+                  })}
+                >
                   {/* TODO: Make this a component */}
                   {columnEditTitle.id !== column.id ? (
                     <Text
@@ -304,22 +321,38 @@ export default function BoardPage() {
                     </Text>
                   ) : (
                     <TextInput
+                      ref={refColumnTitle}
                       autoFocus
                       variant="unstyled"
+                      wrapperProps={{ className: classes.inputWrapper }}
                       value={columnEditTitle.value}
                       data-id={column.id}
                       onChange={handleColumnTitleChange}
                       onKeyUp={handleEditColumnTitle}
                     />
                   )}
-                  <Group wrap="nowrap" gap={4}>
-                    <ActionIcon className={classes.settings}>
-                      <IconDots stroke={3} size={16} />
-                    </ActionIcon>
-                    <ActionIcon className={classes.add}>
-                      <IconPlus stroke={3} size={16} />
-                    </ActionIcon>
-                  </Group>
+                  {/* TODO: Transform into component */}
+                  {columnEditTitle.id !== column.id && (
+                    <Menu
+                      position="bottom-end"
+                      opened={openedId === column.id}
+                      onChange={(opened) => setOpenedId(opened ? column.id : 0)}
+                    >
+                      <Menu.Target>
+                        <ActionIcon
+                          className={csx(classes.settings, {
+                            [classes.menuOpened]: openedId === column.id,
+                          })}
+                        >
+                          <IconDots stroke={3} size={16} />
+                        </ActionIcon>
+                      </Menu.Target>
+                      <Menu.Dropdown className={classes.dropdown}>
+                        <Menu.Item className={classes.menuItem}>Clonar</Menu.Item>
+                        <Menu.Item className={classes.menuItem}>Excluir</Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  )}
                 </div>
                 <Droppable droppableId={String(column.id)}>
                   {(provided) => (
@@ -335,6 +368,15 @@ export default function BoardPage() {
                 </Droppable>
               </div>
             ))}
+            <div className={classes.column}>
+              <Button
+                className={classes.add}
+                leftSection={<IconPlus stroke={4} size={12} />}
+                size="md"
+              >
+                Nova Etapa
+              </Button>
+            </div>
           </div>
         </DragDropContext>
       </ScrollArea>
